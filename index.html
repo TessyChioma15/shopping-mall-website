@@ -10,12 +10,12 @@
         body {
             font-family: Arial;
             margin: 0;
-            background: #f4f4f4;
+            background: #f5f5f5;
         }
 
         /* Header */
         header {
-            background: #333;
+            background: #222;
             color: white;
             padding: 15px;
             text-align: center;
@@ -23,7 +23,7 @@
 
         /* Navigation */
         nav {
-            background: #555;
+            background: #444;
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
@@ -36,26 +36,42 @@
         }
 
         nav a:hover {
-            background: #333;
+            background: #222;
         }
 
-        /* Sections */
-        section {
-            padding: 20px;
+        /* Search bar */
+        .search {
+            text-align: center;
+            margin: 20px;
         }
 
-        /* Product layout */
+        .search input {
+            padding: 10px;
+            width: 60%;
+            max-width: 400px;
+        }
+
+        /* Products */
+
         .products {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
+            padding: 20px;
         }
 
         .product {
             background: white;
             padding: 15px;
-            border-radius: 5px;
+            border-radius: 8px;
             text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
         }
 
         button {
@@ -64,19 +80,30 @@
             border: none;
             padding: 10px;
             cursor: pointer;
+            margin-top: 10px;
         }
 
         button:hover {
             background: #218838;
         }
 
+        /* Cart */
+
+        .cart {
+            background: white;
+            margin: 20px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
         /* Forms */
+
         form {
             background: white;
             padding: 20px;
             max-width: 400px;
             margin: auto;
-            border-radius: 5px;
+            border-radius: 8px;
         }
 
         input,
@@ -87,8 +114,9 @@
         }
 
         /* Footer */
+
         footer {
-            background: #333;
+            background: #222;
             color: white;
             text-align: center;
             padding: 10px;
@@ -97,17 +125,49 @@
     </style>
 
     <script>
-        function addToCart(product) {
-            alert(product + " added to cart!");
+
+        let cart = [];
+        let total = 0
+
+        function addToCart(product, price) {
+            cart.push(product)
+            total += price
+
+            document.getElementById("cartItems").innerHTML = cart.join("<br>");
+            document.getElementById("total").innerHTML = "Total:₦" + total
         }
 
-        function submitOrder() {
-            alert("Your order has been submitted!");
+        function searchProduct() {
+            let input = document.getElementById("search").value.toLowerCase();
+            let products = document.getElementsByClassName("product");
+
+            for (let i = 0; i < products.length; i++) {
+                let text = products[i].innerText.toLowerCase();
+
+                if (text.includes(input)) {
+                    products[i].style.display = "block";
+                } else {
+                    products[i].style.display = "none";
+                }
+            }
         }
 
-        function sendMessage() {
+        function Ordersuccess() {
+            alert("Your Order has been placed successfully!");
+        }
+
+        function paymentsuccess() {
+            alert("Payment successful! Thank you for shooping with us.");
+        }
+
+        function feedbackSent() {
+            alert("Thank you for your feedback!");
+        }
+
+        function sendInquiry() {
             alert("Your inquiry has been sent!");
         }
+
     </script>
 
 </head>
@@ -115,59 +175,260 @@
 <body>
 
     <header>
-        <h1>Chomzy Shopping Mall</h1>
-        <p>Your Online Shopping Destination</p>
+        <h1>Chomzy Online Shopping Mall</h1>
+        <p>Your One-Stop Online Store</p>
     </header>
 
     <nav>
-        <a href="#shop">Shop</a>
+        <a href="#Home">Home</a>
+        <a href="#shop">Products</a>
+        <a href="#cart">Cart</a>
         <a href="#order">Order</a>
         <a href="#payment">Payment</a>
-        <a href="#inquiry">Inquiry</a>
+        <a href="#feedback">Feedback</a>
+        <a href="#contact">Contact</a>
     </nav>
 
-    <!-- SHOP SECTION -->
+    <!-- Search -->
+
+    <div class="search">
+        <input type="text" id="search" placeholder="Search products..." onkeyup="searchProduct()">
+    </div>
+
+    <section id="home">
+        <div style="text-align: center;padding: 20px;">
+            <h2>Welcome to Chomzy Online Shopping Mall</h2>
+            <p>We Provide quality products including fashion,beauty items, electronics and home appliances.</p>
+        </div>
+    </section>
     <section id="shop">
 
-        <h2>Shop Products</h2>
-
+        <h2 style="text-align: center">Our Products</h2>
         <div class="products">
-
             <div class="product">
+                <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff">
                 <h3>Shoes</h3>
-                <p>Price: ₦15,000</p>
-                <button onclick="addToCart('Shoes')">Add to Cart</button>
+                <p>₦15,000</p>
+                <button onclick="addToCart('Shoes',15000)">Add to Cart</button>
             </div>
 
             <div class="product">
+                <img src="https://images.unsplash.com/photo-1593032465171-8f3c7f6a5c33">
                 <h3>Handbag</h3>
-                <p>Price: ₦8,000</p>
-                <button onclick="addToCart('Handbag')">Add to Cart</button>
+                <p>₦8,000</p>
+                <button onclick="addToCart('Handbag', 8000)">Add to Cart</button>
             </div>
 
             <div class="product">
-                <h3>Phone</h3>
-                <p>Price: ₦120,000</p>
-                <button onclick="addToCart('Phone')">Add to Cart</button>
+                <img src="https://images.unsplash.com/photo-1511707171634-5e560c06d30e">
+                <h3>Smartphone</h3>
+                <p>₦120,000</p>
+                <button onclick="addToCart('Smartphone', 120000)">Add to Cart</button>
             </div>
 
             <div class="product">
+                <img src="https://images.unsplash.com/photo-1505740420928-27bfdc403348">
                 <h3>Headphones</h3>
-                <p>Price: ₦10,000</p>
-                <button onclick="addToCart('Headphones')">Add to Cart</button>
+                <p>₦10,000</p>
+                <button onclick="addToCart('Headphones', 10000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1600185365483-26d7a4cc7519">
+                <h3>Sneakers</h3>
+                <p>₦15,000</p>
+                <button onclick="addToCart('Sneakers', 15000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1582582494700-4b1c3c9f88b7">
+                <h3>Duvet</h3>
+                <p>₦35,000</p>
+                <button onclick="addToCart('Duvet', 350000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1497534446932-c925b458314e">
+                <h3>Glass Cup</h3>
+                <p>₦8,000</p>
+                <button onclick="addToCart('Glass Cup', 8000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853">
+                <h3>Laptop</h3>
+                <p>₦350,000</p>
+                <button onclick="addToCart('Laptop', 350000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1589003077984-894e133dabab">
+                <h3>Bluetooth Speaker</h3>
+                <p>₦18,000</p>
+                <button onclick="addToCart('Bluetooth Speaker', 18000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b">
+                <h3>Smart Watch</h3>
+                <p>₦25,000</p>
+                <button onclick="addToCart('Smart Watch', 25000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1609592424823-3c0c0d0c7d4b">
+                <h3>Power Bank</h3>
+                <p>₦12,000</p>
+                <button onclick="addToCart('Power Bank', 12000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1518546305927-5a555bb7020d">
+                <h3>Wrist Watch</h3>
+                <p>₦12,000</p>
+                <button onclick="addToCart('Wrist Watch', 12000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab">
+                <h3>T-Shirt</h3>
+                <p>₦6,000</p>
+                <button onclick="addToCart('T-Shirt', 6000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246">
+                <h3>Jeans Trouser</h3>
+                <p>₦9,000</p>
+                <button onclick="addToCart('Jeans Trouser', 9000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1542060748-10c28b62716b">
+                <h3>Jacket</h3>
+                <p>₦20,000</p>
+                <button onclick="addToCart('Jacket', 20000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348">
+                <h3>Perfume</h3>
+                <p>₦7,000</p>
+                <button onclick="addToCart('Perfume', 7000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1619454016518-697bc231e7cb">
+                <h3>Face Cream</h3>
+                <p>₦7,000</p>
+                <button onclick="addToCart('Face Cream', 7000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9">
+                <h3>Makeup Kit</h3>
+                <p>₦15,000</p>
+                <button onclick="addToCart('Makeup Kit', 15000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1586495777744-4413f21062fa">
+                <h3>Lipstick</h3>
+                <p>₦4,000</p>
+                <button onclick="addToCart('Lipstick', 4000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1596755094514-f87e34085b2c">
+                <h3>Body Lotion</h3>
+                <p>₦6,000</p>
+                <button onclick="addToCart('Body Lotion', 6000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c">
+                <h3>Electric Kettle</h3>
+                <p>₦10,000</p>
+                <button onclick="addToCart('Electric Kettle', 10000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1576866209830-589e1bfbaa4d">
+                <h3>Blender</h3>
+                <p>₦32,000</p>
+                <button onclick="addToCart('Blender', 32000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e">
+                <h3>Bedsheet</h3>
+                <p>₦12,000</p>
+                <button onclick="addToCart('Bedsheet', 12000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952">
+                <h3>Standing Fan</h3>
+                <p>₦35,000</p>
+                <button onclick="addToCart('Standing Fan', 35000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083">
+                <h3>Sunglasses</h3>
+                <p>₦5,000</p>
+                <button onclick="addToCart('Sunglasses', 5000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62">
+                <h3>Backpack</h3>
+                <p>₦14,000</p>
+                <button onclick="addToCart('Backpack', 14000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1601597111158-2fceff292cdc">
+                <h3>Phone Case</h3>
+                <p>₦3,000</p>
+                <button onclick="addToCart('Phone Case', 3000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-15853869599884-a4155224a1ad">
+                <h3>Earbuds</h3>
+                <p>₦9,000</p>
+                <button onclick="addToCart('Earbuds', 9000)">Add to Cart</button>
+            </div>
+
+            <div class="product">
+                <img src="https://images.unsplash.com/photo-1598033129183-c4f50c736f10">
+                <h3>Belt</h3>
+                <p>₦4,500</p>
+                <button onclick="addToCart('Belt', 4500)">Add to Cart</button>
             </div>
 
         </div>
 
     </section>
 
-    <!-- ORDER SECTION -->
+    <section id="cart" class="cart">
+
+        <h2>Shopping Cart</h2>
+
+        <p id="cartItems">No items yet</p>
+
+        <h3 id="total">Total: ₦0</h3>
+
+    </section>
+
     <section id="order">
 
-        <h2>Order Goods</h2>
+        <h2 style="text-align:center">Place Order</h2>
 
-        <form onsubmit="submitOrder(); return false;">
-            <input type="text" placeholder="Your Name" required>
+        <form onsubmit="orderSuccess(); return false;">
+
+            <input type="text" placeholder="Full Name" required>
 
             <input type="text" placeholder="Product Name" required>
 
@@ -176,16 +437,18 @@
             <textarea placeholder="Delivery Address"></textarea>
 
             <button type="submit">Submit Order</button>
+
         </form>
 
     </section>
 
-    <!-- PAYMENT SECTION -->
     <section id="payment">
 
-        <h2>Make Payment</h2>
+        <h2 style="text-align:center">Make Payment</h2>
 
-        <form>
+        <form onsubmit="paymentSuccess(); return false;">
+
+            <input type="text" placeholder="Card Holder Name">
 
             <input type="text" placeholder="Card Number">
 
@@ -199,18 +462,43 @@
 
     </section>
 
-    <!-- INQUIRY SECTION -->
-    <section id="inquiry">
+    <section id="feedback">
 
-        <h2>Customer Inquiry</h2>
+        <h2 style="text-align:center">Customer Feedback</h2>
 
-        <form onsubmit="sendMessage(); return false;">
+        <form onsubmit="feedbackSent(); return false;">
+
+            <input type="text" placeholder="Your Name">
+
+            <textarea placeholder="Write your feedback"></textarea>
+
+            <label>Rate our service</label>
+
+            <select>
+                <option>⭐</option>
+                <option>⭐⭐</option>
+                <option>⭐⭐⭐</option>
+                <option>⭐⭐⭐⭐</option>
+                <option>⭐⭐⭐⭐⭐</option>
+            </select>
+
+            <button type="submit">Submit Feedback</button>
+
+        </form>
+
+    </section>
+
+    <section id="contact">
+
+        <h2 style="text-align:center">Contact Us</h2>
+
+        <form onsubmit="inquirySent(); return false;">
 
             <input type="text" placeholder="Your Name">
 
             <input type="email" placeholder="Your Email">
 
-            <textarea placeholder="Your Message"></textarea>
+            <textarea placeholder="Your message or inquiry"></textarea>
 
             <button type="submit">Send Message</button>
 
@@ -219,10 +507,11 @@
     </section>
 
     <footer>
-        <p>© 2026 Chomzy Shopping Mall</p>
+
+        <p>© 2026 Chioma Online Shopping Mall | All Rights Reserved</p>
+
     </footer>
 
 </body>
-
 
 </html>
